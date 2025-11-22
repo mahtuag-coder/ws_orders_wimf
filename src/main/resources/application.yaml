@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: ws_orders_wimf
+server:
+  servlet:
+    context-path: /ws_orders_wimf
