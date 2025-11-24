@@ -14,6 +14,7 @@ import ws_orders_wimf.repository.OrderRepository;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderEventsPublisherService orderEventsPublisherService;
 
     public OrderResponse getOrderById(Long id) {
         Order order = orderRepository.findById(id)
@@ -25,6 +26,11 @@ public class OrderService {
     @Transactional
     public OrderResponse createOrder(OrderRequest orderRequest) {
         Order savedOrder = orderRepository.save(orderRequest.toEntity());
-        return OrderResponse.fromEntity(savedOrder);
+        OrderResponse orderResponse = OrderResponse.fromEntity(savedOrder);
+
+        // publish to Kafka
+        orderEventsPublisherService.publishOrderCreatedEvent(orderResponse);
+
+        return orderResponse;
     }
 }
