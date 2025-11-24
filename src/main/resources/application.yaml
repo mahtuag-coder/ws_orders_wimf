@@ -1,6 +1,23 @@
-spring:
-  application:
-    name: ws_orders_wimf
 server:
   servlet:
     context-path: /ws_orders_wimf
+
+
+spring:
+  application:
+    name: ws_orders_wimf
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
